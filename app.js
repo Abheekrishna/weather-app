@@ -12,40 +12,38 @@
 "min-temp"
 "max-temp"
 */
-
-// API_KEY for maps api
-let API_KEY = "a8e71c9932b20c4ceb0aed183e6a83bb";
-
-/**
- * Retrieve weather data from openweathermap
- * HINT: Use fetch()
- * HINT: URL should look like this: 
- * https://api.openweathermap.org/data/2.5/weather?q=detroit&appid=a8e71c9932b20c4ceb0aed183e6a83bb&units=imperial
- */
-getWeatherData = (city) => {
-  const URL = "https://api.openweathermap.org/data/2.5/weather";
+const getWeatherData = (city) => {
+  const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a8e71c9932b20c4ceb0aed183e6a83bb&units=imperial`;
   //HINT: Use template literals to create a url with input and an API key
+  fetch(URL, Option)
+  .then(response => response.json())
+  .then(data => {
+    const cityName = document.getElementById('city-name')
+    const weatherType = document.getElementById('weather-type')
+    const temp = document.getElementById('temp')
+    const minTemp = document.getElementById('min-temp')
+    const maxTemp = document.getElementById('max-temp')
 
-  //CODE GOES HERE
+
+    if (city = data.name) {
+    cityName.innerText = `${data.name}`
+    weatherType.innerText =  `${data.weather[0].main}`
+    temp.innerText = Math.floor((Number(data.main.temp)-32) * 5/9)
+    minTemp.innerText = Math.floor((Number(data.main.temp_min) - 32) * 5/9)
+    maxTemp.innerText =  Math.floor((Number(data.main.temp_max)-32)*5/9)
+    } else {
+      cityName.innerText = 'Not found'
+      weatherType.innerText =  ``
+    temp.innerText = ''
+    minTemp.innerText = ''
+    maxTemp.innerText =  ''
+    }
+  })
+
 }
 
-/**
- * Retrieve city input and get the weather data
- * HINT: Use the promise returned from getWeatherData()
- */
 const searchCity = () => {
   const city = document.getElementById('city-input').value;
   // CODE GOES HERE
-
+  getWeatherData(city)
 }
-
-/**
- * Show the weather data in HTML
- * HINT: make sure to console log the weatherData to see how the data looks like
- */
-const showWeatherData = (weatherData) => {
-  //CODE GOES HERE
-  
-}
-
-console.log('jello')
